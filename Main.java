@@ -1,44 +1,52 @@
-import java.util.*;
-import java.io.*;
+import java.util.Scanner;
 
-class Book
-{
-    String title;
-    String author;
-    float price;
+public class Main {
+    public static void main(String[] args) {
+        BookManager manager = new BookManager();
+        Scanner sc = new Scanner(System.in);
+        boolean running = true;
 
-    Book(String title,String author,float price)
-    {
-        this.title = title;
-        this.author = author;
-        this.price = price;
+        System.out.println("Welcome to the Book Manager!");
 
+  
+        while (running) {
+            System.out.println("\n--- MAIN MENU ---");
+            System.out.println("1. Add a Book");
+            System.out.println("2. Display All Books");
+            System.out.println("3. Search for a Book");
+            System.out.println("4. Delete a Book");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice (1-5): ");
 
-        void display()
-        {
-            System.out.println("Title of Book :" +title);
-            System.out.println("Author of Book :" +author);
-            System.out.println("Title of Book :" +price);
+            int choice = sc.nextInt();
+            sc.nextLine();
 
+            switch (choice) 
+            {
+                case 1:
+                    manager.addBook();
+                    break;
+                case 2:
+                    manager.display();
+                    break;
+                case 3:
+                
+                    manager.searchBook(); 
+                    System.out.println(".......");
+                    break;
+                case 4:
+                    manager.deleteBook();
+                    break;
+                case 5:
+                    System.out.println("Saving data...");
+                    running = false; 
+                    break;
+                default:
+                    
+                    System.out.println("Invalid choice! Please select a number from 1 to 5.");
+            }
         }
-
-
+        
+        sc.close(); 
     }
-
-
-
-}
-
-
-class Main
-{
-    public static void main(String args[])
-    {
-        Book bk1 = new Book("Ikigai","Héctor García and Francesc Miralles",600.0f);
-        bk1.display();
-
-
-
-    }
-
 }
