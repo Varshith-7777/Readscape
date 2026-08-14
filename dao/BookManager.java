@@ -1,3 +1,6 @@
+package dao;
+import model.*;
+import config.DatabaseHelper;
 import java.util.*;
 
 public class BookManager 
@@ -6,7 +9,7 @@ public class BookManager
     //This is a class which does Book operations like adding book,updating,removing,deleting
     ArrayList<Book> books = new ArrayList<>();
     Scanner sc= new Scanner(System.in);
-    void addBook()
+    public void addBook()
     {
     
         System.out.println("Enter Title of book :");
@@ -25,7 +28,7 @@ public class BookManager
 
     }
 
-    void searchBook()
+    public void searchBook()
     {
         System.out.println("Enter The Title of book You Want To Search :");
         String searchTitle = sc.nextLine();
@@ -42,10 +45,11 @@ public class BookManager
             }
         }
     }
-    void updateBook()
+    public void updateBook()
     {
         System.out.println("Enter The Title of book You Want To Update :");
-        String hj = sc.nextLine();
+        String change = sc.nextLine();
+        
         
 
 
@@ -54,7 +58,7 @@ public class BookManager
 
     }
 
-    void deleteBook()
+   public void deleteBook()
     {
         System.out.println("Enter The Title of book You Want To Delete :");
         String deleteTitle = sc.nextLine();

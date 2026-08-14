@@ -1,31 +1,33 @@
-abstract class Book
+package model;
+
+public abstract class Book
 {
     private String title;
     private String author;
     private float price;
 
-    Book(String title, String author, float price)
+    public Book(String title, String author, float price)
     {
         this.title = title;
         this.author = author;
         this.price = price;
     }
 
-    Book()
+    public Book()
     {
         title = null;
         author = null;
         price = 0.0f;
     }
 
-    void display()
+    public void display()
     {
         System.out.println("Title : " + title);
         System.out.println("Author : " + author);
         System.out.println("Price : " + price);
     }
 
-    void setPrice(float p)
+    public void setPrice(float p)
     {
         if (p < 0)
         {
@@ -35,27 +37,27 @@ abstract class Book
         this.price = p;
     }
 
-    float getPrice()
+    public float getPrice()
     {
         return price;
     }
 
-    void setAuthor(String author)
+    public void setAuthor(String author)
     {
         this.author = author;
     }
 
-    String getAuthor()
+    public String getAuthor()
     {
         return author;
     }
 
-    void setTitle(String title)
+    public void setTitle(String title)
     {
         this.title = title;
     }
 
-    String getTitle()
+    public String getTitle()
     {
         return title;
     }

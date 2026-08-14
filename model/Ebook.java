@@ -1,16 +1,19 @@
+package model;
+
+
 public class Ebook extends Book implements Downloadable
 {
     private float fileSize;
     private int pageNums;
 
-    Ebook(String title, String author, float price, float fileSize,int pageNums)
+    public Ebook(String title, String author, float price, float fileSize,int pageNums)
     {
         super(title, author, price);
         this.fileSize = fileSize;
         this.pageNums = pageNums;
     }
 
-    Ebook()
+    public Ebook()
     {
     }
 
