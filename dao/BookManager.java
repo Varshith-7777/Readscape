@@ -1,99 +1,76 @@
 package dao;
-import model.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import config.DatabaseHelper;
+import model.Ebook;
 import java.util.*;
 
-public class BookManager 
-{
+public class BookManager {
 
-    //This is a class which does Book operations like adding book,updating,removing,deleting
-    ArrayList<Book> books = new ArrayList<>();
-    Scanner sc= new Scanner(System.in);
-    public void addBook()
-    {
-    
-        System.out.println("Enter Title of book :");
-        String title = sc.nextLine();
-        System.out.println("Enter Author of book :");
-        String author = sc.nextLine();
-        System.out.println("Enter Price of book :");
-        float price = sc.nextFloat();
-        System.out.println("Enter FileSize of book :");
-        int fileSize = sc.nextInt();
-        System.out.println("Enter PageNo's of book :");
-        int pageNum = sc.nextInt();
-        sc.nextLine();
-        books.add(new Ebook(title,author,price,fileSize,pageNum));
-        System.out.println("Book added successfully!");
+    public void addBook(Ebook book) {
+        String sql = "INSERT INTO Books (title, author, price, file_size, page_nums, file_path, ambient_track, description, cover_image, category) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        try (Connection conn = DatabaseHelper.getConnection();
+             PreparedStatement pstm = conn.prepareStatement(sql)) {
+
+            pstm.setString(1, book.getTitle());
+            pstm.setString(2, book.getAuthor());
+            pstm.setDouble(3, book.getPrice());
+            pstm.setDouble(4, book.getFilesize());
+            pstm.setInt(5, book.getPageNums());
+            pstm.setString(6, book.getFilePath());
+            pstm.setString(7, book.getAmbient_track());
+            pstm.setString(8, book.getDescription());
+            pstm.setString(9, book.getCoverImage());
+            pstm.setString(10, book.getCategory());
+
+            int rowsInserted = pstm.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println(" Ebook '" + book.getTitle() + "' saved to MySQL successfully!");
+            }
+        } catch (SQLException e) {
+            System.err.println(" Database Error inserting book: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    public void searchBook()
+    public List<Ebook> getBooks()
     {
-        System.out.println("Enter The Title of book You Want To Search :");
-        String searchTitle = sc.nextLine();
-         if (books.isEmpty()) 
+        List<Ebook> bookList = new ArrayList<>();
+        String sql = "SELECT * FROM Books";
+        try(Connection conn = DatabaseHelper.getConnection();
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            ResultSet rs = pstm.executeQuery())
         {
-            System.out.println("No books found.");
-            return;
-        }
-        for(Book i : books)
-        {
-            if(i.getTitle().contains(searchTitle))
+            while(rs.next())
             {
-                i.display();
+               Ebook book = new Ebook(
+                rs.getInt("id"),
+                rs.getString("title"),
+                rs.getString("author"),
+                rs.getDouble("price"),
+                rs.getDouble("file_size"),
+                rs.getInt("page_nums"),
+                rs.getString("file_path"),
+                rs.getString("ambient_track"),
+                rs.getString("description"),
+                rs.getString("cover_image"),
+                rs.getString("category")
+            );
+            bookList.add(book);
+
             }
         }
-    }
-    public void updateBook()
-    {
-        System.out.println("Enter The Title of book You Want To Update :");
-        String change = sc.nextLine();
-        
-        
-
-
-
-
-
-    }
-
-   public void deleteBook()
-    {
-        System.out.println("Enter The Title of book You Want To Delete :");
-        String deleteTitle = sc.nextLine();
-         if (books.isEmpty())
+        catch(SQLException e)
         {
-            System.out.println("No books found.");
-            return;
+            System.err.println("❌ Error fetching books: " + e.getMessage());
         }
-        boolean removed = books.removeIf(target->target.getTitle().equalsIgnoreCase(deleteTitle));
-        if(removed)
-        {
-            System.out.println("Book Deleted");
-        }
-        else{
-            System.out.println("Failed to delete");
-        }
+        return bookList;
     }
 
-
-
-
-     public void display()
-    {
-        if (books.isEmpty()) {
-            System.out.println("No books found.");
-            return;
-        }
-        for(Book i : books)
-        {
-            i.display();
-        }
-
-    }
-
-
-    
-    
+ 
 }

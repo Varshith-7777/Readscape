@@ -2,55 +2,41 @@ package service;
 import config.DatabaseHelper;
 import model.*;
 import dao.BookManager;
-import java.util.Scanner;
+import java.util.*;
 
-public class Main {
-    public static void main(String[] args) {
+public class Main 
+{
+    public static void main(String[] args)
+   {
         BookManager manager = new BookManager();
-        Scanner sc = new Scanner(System.in);
-        boolean running = true;
+        DatabaseHelper.initializeDatabase();
 
-        System.out.println("Welcome to the Book Manager!");
+        Ebook testBook = new Ebook(
+            "Frankenstein",
+            "Mary Shelley",
+            "Gothic Horror",
+            0.00,
+            1.2,
+            280,
+            "/books/frankenstein.txt",
+            "/images/frankenstein.jpg",
+            "A monster created by a young scientist.",
+            "/audio/rain_storm.mp3"
+        );
 
-  
-        while (running) {
-            System.out.println("\n--- MAIN MENU ---");
-            System.out.println("1. Add a Book");
-            System.out.println("2. Display All Books");
-            System.out.println("3. Search for a Book");
-            System.out.println("4. Delete a Book");
-            System.out.println("5. Exit");
-            System.out.print("Enter your choice (1-5): ");
 
-            int choice = sc.nextInt();
-            sc.nextLine();
+        manager.addBook(testBook);
 
-            switch (choice) 
-            {
-                case 1:
-                    manager.addBook();
-                    break;
-                case 2:
-                    manager.display();
-                    break;
-                case 3:
-                
-                    manager.searchBook(); 
-                    System.out.println(".......");
-                    break;
-                case 4:
-                    manager.deleteBook();
-                    break;
-                case 5:
-                    System.out.println("Saving data...");
-                    running = false; 
-                    break;
-                default:
-                    
-                    System.out.println("Invalid choice! Please select a number from 1 to 5.");
-            }
+        List <Ebook> book1 = manager.getBooks();
+
+        for(Ebook b : book1)
+        {
+            System.out.println("ID: " + b.getId() + " | Title: " + b.getTitle() + " | Author: " + b.getAuthor() + " | Category: " + b.getCategory());
         }
-        
-        sc.close(); 
-    }
-}
+
+
+
+        }
+
+ }
+

@@ -1,0 +1,6 @@
+./config/DatabaseHelper.java
+./dao/BookManager.java
+./model/Book.java
+./model/Downloadable.java
+./model/Ebook.java
+./service/Main.java
