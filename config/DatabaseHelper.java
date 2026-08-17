@@ -12,7 +12,8 @@ public class DatabaseHelper {
     private static final String DB_PASS = "root123";
 
     // Used by BookManager to connect directly to readscape_db
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException
+    {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
     }
 
@@ -22,7 +23,8 @@ public class DatabaseHelper {
              Statement stmt = conn.createStatement()) {
 
             stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS readscape_db");
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.err.println("Database Creation Failed: " + e.getMessage());
             return;
         }
@@ -55,7 +57,9 @@ public class DatabaseHelper {
             stmt.executeUpdate(createAudioTable);
 
             System.out.println("✅ Database & Tables initialized successfully!");
-        } catch (SQLException e) {
+        }
+         catch (SQLException e) 
+         {
             System.err.println("Table Initialization Failed: " + e.getMessage());
         }
     }
